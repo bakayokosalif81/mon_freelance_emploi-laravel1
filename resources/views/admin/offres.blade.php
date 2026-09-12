@@ -23,6 +23,7 @@
                             <th class="px-6 py-3">Catégorie</th>
                             <th class="px-6 py-3">Budget</th>
                             <th class="px-6 py-3">Statut</th>
+                            <th class="px-6 py-3">Vedette</th>
                             <th class="px-6 py-3">Date</th>
                             <th class="px-6 py-3">Actions</th>
                         </tr>
@@ -46,17 +47,52 @@
                                     {{ ucfirst($offre->statut) }}
                                 </span>
                             </td>
+                            <td class="px-6 py-4">
+                                @if($offre->vedette_statut == 'active')
+                                    <span class="px-2 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+                                        🔥 Active
+                                    </span>
+                                @elseif($offre->vedette_statut == 'en_attente')
+                                    <span class="px-2 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
+                                        ⏳ En attente paiement
+                                    </span>
+                                @else
+                                    <span class="text-xs text-gray-400">—</span>
+                                @endif
+                            </td>
                             <td class="px-6 py-4 text-gray-500">{{ $offre->created_at->format('d/m/Y') }}</td>
                             <td class="px-6 py-4">
-                                <form method="POST" action="{{ route('admin.offres.delete', $offre) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        onclick="return confirm('Supprimer cette offre ?')"
-                                        class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600">
-                                        Supprimer
-                                    </button>
-                                </form>
+                                <div class="flex flex-col gap-2">
+                                    @if($offre->vedette_statut == 'en_attente' || $offre->vedette_statut == 'aucune')
+                                        <form method="POST" action="{{ route('admin.offres.vedette.activer', $offre) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="bg-amber-500 text-white px-3 py-1 rounded text-xs hover:bg-amber-600 w-full">
+                                                Activer vedette
+                                            </button>
+                                        </form>
+                                    @endif
+                                    @if($offre->vedette_statut == 'active')
+                                        <form method="POST" action="{{ route('admin.offres.vedette.desactiver', $offre) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="bg-gray-400 text-white px-3 py-1 rounded text-xs hover:bg-gray-500 w-full">
+                                                Désactiver
+                                            </button>
+                                        </form>
+                                    @endif
+                                    <form method="POST" action="{{ route('admin.offres.delete', $offre) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            onclick="return confirm('Supprimer cette offre ?')"
+                                            class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 w-full">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @endforeach

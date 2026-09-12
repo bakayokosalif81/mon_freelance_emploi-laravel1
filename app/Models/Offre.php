@@ -8,7 +8,8 @@ class Offre extends Model
 {
     protected $fillable = [
         'user_id', 'categorie_id', 'titre',
-        'description', 'budget', 'statut'
+        'description', 'budget', 'statut',
+        'en_vedette', 'vedette_statut'
     ];
 
     public function client()

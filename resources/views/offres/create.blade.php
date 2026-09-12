@@ -69,6 +69,23 @@
                         @error('budget') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
+                    <!-- Mise en vedette -->
+                    <div class="mb-5 bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="demande_vedette" value="1"
+                                {{ old('demande_vedette') ? 'checked' : '' }}
+                                class="mt-1 rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                            <span>
+                                <span class="block text-sm font-semibold text-gray-800">
+                                    🔥 Mettre mon offre en vedette — 2000 FCFA
+                                </span>
+                                <span class="block text-xs text-gray-500 mt-1">
+                                    Votre offre apparaîtra en priorité en haut de la liste avec un badge "En vedette", pour plus de visibilité auprès des freelances. Les instructions de paiement s'afficheront après publication.
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+
                     <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
                         <a href="{{ route('dashboard') }}"
                             class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition text-sm">

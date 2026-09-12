@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
         Route::get('/offres', [AdminController::class, 'offres'])->name('offres');
         Route::delete('/offres/{offre}', [AdminController::class, 'deleteOffre'])->name('offres.delete');
+        Route::patch('/offres/{offre}/vedette/activer', [AdminController::class, 'activerVedette'])->name('offres.vedette.activer');
+        Route::patch('/offres/{offre}/vedette/desactiver', [AdminController::class, 'desactiverVedette'])->name('offres.vedette.desactiver');
         Route::get('/categories', [AdminController::class, 'categories'])->name('categories');
         Route::post('/categories', [AdminController::class, 'storeCategorie'])->name('categories.store');
         Route::delete('/categories/{categorie}', [AdminController::class, 'deleteCategorie'])->name('categories.delete');

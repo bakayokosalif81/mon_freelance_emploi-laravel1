@@ -32,7 +32,8 @@ class OffreController extends Controller
             $query->where('budget', '<=', $request->budget_max);
         }
 
-        $offres = $query->latest()->paginate(10)->withQueryString();
+        // Les offres en vedette apparaissent en premier
+        $offres = $query->orderByDesc('en_vedette')->latest()->paginate(10)->withQueryString();
         $categories = Categorie::all();
 
         return view('offres.index', compact('offres', 'categories'));
@@ -49,20 +50,29 @@ class OffreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titre'        => ['required', 'string', 'max:255'],
-            'description'  => ['required', 'string'],
-            'budget'       => ['nullable', 'numeric'],
-            'categorie_id' => ['required', 'exists:categories,id'],
+            'titre'           => ['required', 'string', 'max:255'],
+            'description'     => ['required', 'string'],
+            'budget'          => ['nullable', 'numeric'],
+            'categorie_id'    => ['required', 'exists:categories,id'],
+            'demande_vedette' => ['nullable', 'boolean'],
         ]);
 
-        Offre::create([
-            'user_id'      => Auth::id(),
-            'titre'        => $request->titre,
-            'description'  => $request->description,
-            'budget'       => $request->budget,
-            'categorie_id' => $request->categorie_id,
-            'statut'       => 'ouverte',
+        $offre = Offre::create([
+            'user_id'        => Auth::id(),
+            'titre'          => $request->titre,
+            'description'    => $request->description,
+            'budget'         => $request->budget,
+            'categorie_id'   => $request->categorie_id,
+            'statut'         => 'ouverte',
+            'vedette_statut' => $request->boolean('demande_vedette') ? 'en_attente' : 'aucune',
         ]);
+
+        if ($request->boolean('demande_vedette')) {
+            return redirect()->route('dashboard')->with(
+                'success',
+                'Offre publiée ! Pour activer la mise en vedette (2000 FCFA), envoyez le paiement par Mobile Money au 07 47 80 62 06 en précisant le titre de votre offre, puis contactez l\'administrateur.'
+            );
+        }
 
         return redirect()->route('dashboard')->with('success', 'Offre publiée avec succès !');
     }

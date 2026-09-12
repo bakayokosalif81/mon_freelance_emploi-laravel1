@@ -53,6 +53,28 @@ class AdminController extends Controller
         return back()->with('success', 'Offre supprimée !');
     }
 
+    // Activer la mise en vedette d'une offre (après réception du paiement)
+    public function activerVedette(Offre $offre)
+    {
+        $offre->update([
+            'en_vedette'     => true,
+            'vedette_statut' => 'active',
+        ]);
+
+        return back()->with('success', 'Offre mise en vedette activée !');
+    }
+
+    // Désactiver la mise en vedette d'une offre
+    public function desactiverVedette(Offre $offre)
+    {
+        $offre->update([
+            'en_vedette'     => false,
+            'vedette_statut' => 'aucune',
+        ]);
+
+        return back()->with('success', 'Mise en vedette désactivée !');
+    }
+
     // Liste des catégories
     public function categories()
     {

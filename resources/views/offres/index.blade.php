@@ -73,11 +73,19 @@
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($offres as $offre)
-                        <div class="bg-white shadow-sm sm:rounded-lg p-6 flex flex-col justify-between">
+                        <div class="bg-white shadow-sm sm:rounded-lg p-6 flex flex-col justify-between
+                            {{ $offre->en_vedette ? 'ring-2 ring-amber-400' : '' }}">
                             <div>
-                                <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">
-                                    {{ $offre->categorie->nom ?? 'Sans catégorie' }}
-                                </span>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">
+                                        {{ $offre->categorie->nom ?? 'Sans catégorie' }}
+                                    </span>
+                                    @if($offre->en_vedette)
+                                        <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full font-semibold">
+                                            🔥 En vedette
+                                        </span>
+                                    @endif
+                                </div>
                                 <h3 class="text-lg font-semibold text-gray-800 mt-2">
                                     {{ $offre->titre }}
                                 </h3>
