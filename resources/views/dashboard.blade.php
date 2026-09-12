@@ -14,6 +14,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             {{-- MESSAGE DE BIENVENUE --}}
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 mb-6">
                 <h3 class="text-lg font-semibold text-gray-800">
