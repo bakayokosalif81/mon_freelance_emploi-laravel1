@@ -47,6 +47,15 @@
                             placeholder="Parlez de vous, votre expérience...">{{ old('bio', $user->bio) }}</textarea>
                         @error('bio') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
+                    
+                    {{-- Téléphone --}}
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-1">📞 Téléphone</label>
+                        <input type="text" name="telephone" value="{{ old('telephone', $user->telephone) }}"
+                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500"
+                            placeholder="Ex: +225 07 00 00 00 00">
+                        @error('telephone') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                    </div>
 
                     {{-- Compétences (freelance uniquement) --}}
                     @if($user->isFreelance())

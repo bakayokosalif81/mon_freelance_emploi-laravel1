@@ -28,6 +28,7 @@ class MonProfilController extends Controller
             'name'        => ['required', 'string', 'max:255'],
             'bio'         => ['nullable', 'string', 'max:1000'],
             'competences' => ['nullable', 'string', 'max:500'],
+            'telephone'   => ['nullable', 'string', 'max:20'],
             'photo'       => ['nullable', 'image', 'max:2048'],
         ]);
 
@@ -35,6 +36,7 @@ class MonProfilController extends Controller
             'name'        => $request->name,
             'bio'         => $request->bio,
             'competences' => $request->competences,
+            'telephone'   => $request->telephone,
         ];
 
         if ($request->hasFile('photo')) {

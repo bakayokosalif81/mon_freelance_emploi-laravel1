@@ -47,6 +47,28 @@
                                 </span>
                             </div>
 
+                            @if($candidature->statut == 'acceptee')
+                            <div class="mt-4 bg-green-50 border border-green-200 rounded-md p-4">
+                                <p class="text-sm font-semibold text-green-800 mb-2">📞 Coordonnées du freelance</p>
+                                <p class="text-sm text-gray-700">
+                                    ✉️ Email :
+                                    <a href="mailto:{{ $candidature->freelance->email }}" class="text-indigo-600 hover:underline">
+                                        {{ $candidature->freelance->email }}
+                                    </a>
+                                </p>
+                                @if($candidature->freelance->telephone)
+                                    <p class="text-sm text-gray-700">
+                                        📱 Téléphone :
+                                        <a href="tel:{{ $candidature->freelance->telephone }}" class="text-indigo-600 hover:underline">
+                                            {{ $candidature->freelance->telephone }}
+                                        </a>
+                                    </p>
+                                @else
+                                    <p class="text-sm text-gray-400 italic">Le freelance n'a pas renseigné de numéro de téléphone.</p>
+                                @endif
+                            </div>
+                            @endif
+
                             @if($candidature->statut == 'en_attente')
                             <div class="mt-4 flex gap-3">
                                 <form method="POST" action="{{ route('candidatures.updateStatut', $candidature) }}">
