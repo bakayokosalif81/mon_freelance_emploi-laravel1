@@ -12,7 +12,9 @@ class OffreController extends Controller
     // Liste des offres avec recherche et filtres
     public function index(Request $request)
     {
-        $query = Offre::with(['client', 'categorie'])->where('statut', 'ouverte');
+        $query = Offre::with(['client', 'categorie'])
+                       ->where('statut', 'ouverte')
+                       ->where('vedette_statut', '!=', 'en_attente'); // Cache les offres en attente de paiement vedette
 
         // Recherche par mot-clé
         if ($request->filled('search')) {
@@ -70,7 +72,7 @@ class OffreController extends Controller
         if ($request->boolean('demande_vedette')) {
             return redirect()->route('dashboard')->with(
                 'success',
-                'Offre publiée ! Pour activer la mise en vedette (2000 FCFA), envoyez le paiement par Mobile Money au 07 47 80 62 06 en précisant le titre de votre offre, puis contactez l\'administrateur.'
+                'Offre créée ! Elle sera visible publiquement dès validation de votre paiement vedette (2000 FCFA). Envoyez le paiement par Mobile Money au 07 47 80 62 06 en précisant le titre de votre offre, puis contactez l\'administrateur.'
             );
         }
 
