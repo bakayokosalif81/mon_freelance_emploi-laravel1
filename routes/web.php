@@ -41,10 +41,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('dashboard');
         Route::get('/users', [AdminController::class, 'users'])->name('users');
         Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
+
         Route::get('/offres', [AdminController::class, 'offres'])->name('offres');
         Route::delete('/offres/{offre}', [AdminController::class, 'deleteOffre'])->name('offres.delete');
         Route::patch('/offres/{offre}/vedette/activer', [AdminController::class, 'activerVedette'])->name('offres.vedette.activer');
         Route::patch('/offres/{offre}/vedette/desactiver', [AdminController::class, 'desactiverVedette'])->name('offres.vedette.desactiver');
+
+        // Corbeille des offres
+        Route::get('/offres-corbeille', [AdminController::class, 'corbeilleOffres'])->name('offres.corbeille');
+        Route::patch('/offres/{id}/restaurer', [AdminController::class, 'restoreOffre'])->name('offres.restaurer');
+        Route::delete('/offres/{id}/supprimer-definitivement', [AdminController::class, 'forceDeleteOffre'])->name('offres.forceDelete');
+
         Route::get('/categories', [AdminController::class, 'categories'])->name('categories');
         Route::post('/categories', [AdminController::class, 'storeCategorie'])->name('categories.store');
         Route::delete('/categories/{categorie}', [AdminController::class, 'deleteCategorie'])->name('categories.delete');

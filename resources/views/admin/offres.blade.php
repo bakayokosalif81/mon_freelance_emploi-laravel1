@@ -14,6 +14,13 @@
                 </div>
             @endif
 
+            <div class="mb-4 flex justify-end">
+                <a href="{{ route('admin.offres.corbeille') }}"
+                    class="bg-gray-700 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-800">
+                    🗑️ Voir la corbeille
+                </a>
+            </div>
+
             <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">
                 <table class="w-full text-sm text-left">
                     <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
@@ -87,7 +94,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            onclick="return confirm('Supprimer cette offre ?')"
+                                            onclick="return confirm('Déplacer cette offre dans la corbeille ?')"
                                             class="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600 w-full">
                                             Supprimer
                                         </button>

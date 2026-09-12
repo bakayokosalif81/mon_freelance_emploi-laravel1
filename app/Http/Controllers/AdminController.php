@@ -39,18 +39,41 @@ class AdminController extends Controller
         return back()->with('success', 'Utilisateur supprimé !');
     }
 
-    // Liste des offres
+    // Liste des offres actives (non supprimées)
     public function offres()
     {
         $offres = Offre::with(['client', 'categorie'])->latest()->paginate(15);
         return view('admin.offres', compact('offres'));
     }
 
-    // Supprimer une offre
+    // Envoyer une offre à la corbeille (suppression douce)
     public function deleteOffre(Offre $offre)
     {
         $offre->delete();
-        return back()->with('success', 'Offre supprimée !');
+        return back()->with('success', 'Offre déplacée dans la corbeille !');
+    }
+
+    // Voir la corbeille (offres supprimées)
+    public function corbeilleOffres()
+    {
+        $offres = Offre::onlyTrashed()->with(['client', 'categorie'])->latest('deleted_at')->paginate(15);
+        return view('admin.offres-corbeille', compact('offres'));
+    }
+
+    // Restaurer une offre depuis la corbeille
+    public function restoreOffre($id)
+    {
+        $offre = Offre::onlyTrashed()->findOrFail($id);
+        $offre->restore();
+        return back()->with('success', 'Offre restaurée avec succès !');
+    }
+
+    // Supprimer définitivement une offre (irréversible)
+    public function forceDeleteOffre($id)
+    {
+        $offre = Offre::onlyTrashed()->findOrFail($id);
+        $offre->forceDelete();
+        return back()->with('success', 'Offre supprimée définitivement !');
     }
 
     // Activer la mise en vedette d'une offre (après réception du paiement)
