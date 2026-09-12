@@ -47,7 +47,7 @@
                             placeholder="Parlez de vous, votre expérience...">{{ old('bio', $user->bio) }}</textarea>
                         @error('bio') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
-                    
+
                     {{-- Téléphone --}}
                     <div class="mb-4">
                         <label class="block text-gray-700 font-semibold mb-1">📞 Téléphone</label>
